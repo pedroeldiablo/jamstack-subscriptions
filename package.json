@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "develop": "env-cmd -f .env.development gatsby develop",
     "clean": "gatsby clean"
   },
   "dependencies": {
@@ -17,5 +17,8 @@
     "react-dom": "^16.13.1",
     "react-netlify-identity": "^0.2.5",
     "react-netlify-identity-widget": "^0.2.7"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
   }
 }

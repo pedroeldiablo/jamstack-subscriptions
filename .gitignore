@@ -13,4 +13,8 @@ node_modules/
 public
 
 # dotenv environment variables file
-.env
+.env*
+# .env.development
+
+# Local Netlify folder
+.netlify
