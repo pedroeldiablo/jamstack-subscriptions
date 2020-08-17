@@ -13,6 +13,7 @@
     "@reach/tabs": "^0.10.5",
     "@reach/visually-hidden": "^0.10.4",
     "gatsby": "^2.24.47",
+    "gatsby-plugin-netlify-identity": "^0.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-netlify-identity": "^0.2.5",
