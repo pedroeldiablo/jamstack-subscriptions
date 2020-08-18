@@ -4,6 +4,6 @@ exports.handler = async (event) => {
   
   return {
     statusCode: 200, 
-    app_metadata: {roles: ['subscriber:free'], awesome: [true]}
+    app_metadata: {roles: ['sub:free']}
   };
 };
