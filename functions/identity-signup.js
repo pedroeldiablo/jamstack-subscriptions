@@ -4,6 +4,6 @@ exports.handler = async (event) => {
   
   return {
     statusCode: 200, 
-    app_metadata: {roles: ['sub:free']}
+    body: JSON.stringify({app_metadata: {roles: ['sub:free']}})
   };
 };
