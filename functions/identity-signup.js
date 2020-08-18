@@ -4,7 +4,7 @@ exports.handler = async (event) => {
   const { user } = JSON.parse(event.body);
   console.log(JSON.stringify(user, null, 2));
 
-  const netlifyID = user.netlifyID;
+  const netlifyID = user.id;
 
   //TODO create a stripe custom object
   const stripeID = 1;
