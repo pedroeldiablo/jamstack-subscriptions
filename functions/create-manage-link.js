@@ -3,8 +3,12 @@ const { faunaFetch } = require('./utils/fauna');
 
 exports.handler = async (event, context) => {
   const { user } = context.clientContext;
+  const {token} = context.clientContext.custom.identity;
+  const parts = access_token.split('.');
+  const currentUser = JSON.parse(atob(parts[1]));
+
   console.log({event});
-  console.log('what is the client context?', context.clientContext);
+  console.log('what is the client context currentUser?', currentUser);
 
   console.log('what is the user in create manage link', user);
 
@@ -17,7 +21,7 @@ exports.handler = async (event, context) => {
         }
     `;
 
-  const variables = { netlifyID: user};
+  const variables = { netlifyID: currentUser};
 
   const result = await faunaFetch({query, variables});
 
