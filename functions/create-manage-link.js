@@ -4,7 +4,7 @@ const { faunaFetch } = require('./utils/fauna');
 exports.handler = async (event, context) => {
   const { user } = context.clientContext;
   const {token} = context.clientContext.custom.identity;
-  const parts = access_token.split('.');
+  const parts = token.split('.');
   const currentUser = JSON.parse(atob(parts[1]));
 
   console.log({event});
