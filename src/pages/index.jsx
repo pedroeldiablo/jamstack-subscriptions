@@ -11,10 +11,10 @@ export const Index = () => {
   const loggedInEffect = () => {
     if (identity && identity.user) {
       const { roles } =  identity.user.app_metadata;
-      // const currentUser = identity.user;
+      const currentUser = identity.user;
       const access_token = identity.user.token.access_token;
       const parts = access_token.split('.');
-      const currentUser = JSON.parse(atob(parts[1]));
+      // const currentUser = JSON.parse(atob(parts[1]));
       const {sub} = currentUser;
       console.log({roles});
       console.log('What is the token?', identity.user.token.access_token);
