@@ -4,7 +4,7 @@ const { faunaFetch } = require('./utils/fauna');
 exports.handler = async (event, context) => {
   const { user } = context.clientContext;
   console.log({event});
-  console.log({context});
+  console.log('what is the client context?', context.clientContext);
 
   console.log('what is the user in create manage link', user);
 
