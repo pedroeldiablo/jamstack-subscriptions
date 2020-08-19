@@ -2,3 +2,9 @@ type User {
     netlifyID: ID!
     stripeID: ID!
 }
+
+type Query {
+    getUserByNetlifyID(netlifyID: ID!): User!
+    getUserByStripeID(stripeID: ID!): User!
+
+}

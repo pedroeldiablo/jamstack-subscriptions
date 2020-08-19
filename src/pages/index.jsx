@@ -11,8 +11,25 @@ export const Index = () => {
   const loggedInEffect = () => {
     if (identity && identity.user) {
       const { roles } =  identity.user.app_metadata;
+      // const currentUser = identity.user;
+      const access_token = identity.user.token.access_token;
+      const parts = access_token.split('.');
+      const currentUser = JSON.parse(atob(parts[1]));
+      const {sub} = currentUser;
       console.log({roles});
+      console.log('What is the token?', identity.user.token.access_token);
+      console.log('What is the currentUser?', currentUser);
+      console.log('What is the sub?', sub);
       setIsSubscribed(roles);
+      fetch('/.netlify/functions/create-manage-link', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${sub}`
+        }
+      })
+        .then((res) => res.text())
+        .then((res) => console.log(res))
+        .catch((err) => console.error(err));
     } 
   };
          
@@ -30,7 +47,11 @@ export const Index = () => {
       <p>What's your subscription? {isSubscribed}</p>
       <p>Access exclusive posts and demos</p>
       { identity && identity.isLoggedIn && (
-        <pre>{JSON.stringify(identity, null, 2)}</pre>
+        <>
+          <h2>Manage your subscription</h2>
+          <button id="manage-subscription">Manage Your Subscriptions</button>
+          <pre>{JSON.stringify(identity, null, 2)}</pre>  
+        </>
       )}
       {!dialog && (<button onClick={() => setDialog(true)}>Log On</button>)}
       <IdentityModal
