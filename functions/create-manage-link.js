@@ -19,7 +19,11 @@ exports.handler = async (event, context) => {
     
   const result = await faunaFetch({query, variables});
 
-  console.log({result});
+  //   console.log({result});
+
+  const stripeID = result.data.get.getUserByNetlifyID.stripeID;
+
+  console.log({stripeID});
 
   return {
     statusCode: 200,
