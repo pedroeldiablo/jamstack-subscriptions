@@ -38,8 +38,15 @@ export const Index = () => {
           Authorization: `Bearer ${token.access_token}`
         }
       })
-        .then((res) => res.body.json())
-        .then((res) => console.log(res.body))
+        // .then((res) => res.json())
+        // .then((res) => console.log(res.body))
+        .then((res) => { 
+          console.log('what is the res?', res);
+          const body = res.body; 
+          console.log('where is the body? ', body);
+          const reader = body.getReader();
+          console.log(reader);
+        })
         .catch((err) => console.error(err));
     } 
   };
