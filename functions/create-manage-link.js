@@ -19,6 +19,8 @@ exports.handler = async (event, context) => {
     
   const result = await faunaFetch({query, variables});
 
+  console.log(result);
+
   return {
     statusCode: 200,
     body: JSON.stringify(result)
