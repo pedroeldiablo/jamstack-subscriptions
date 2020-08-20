@@ -38,7 +38,7 @@ export const Index = () => {
           Authorization: `Bearer ${token.access_token}`
         }
       })
-        .then((response) => response.text())
+        .then((response) => response.json())
         .then((res) => console.log('Index function return ', res))
         .catch((err) => console.error(err));
     } 

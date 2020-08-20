@@ -19,7 +19,7 @@ exports.handler = async (event, context) => {
 
   console.log({variables});
     
-  //   const result = await faunaFetch({query, variables});
+  const result1 = await faunaFetch({query, variables});
 
   const result = {
     'data': {
@@ -30,7 +30,7 @@ exports.handler = async (event, context) => {
     }
   };
 
-  //   console.log({result});
+  console.log({result1});
 
   //   const stripeID = result.data.getUserByNetlifyID.stripeID;
   //   const link = await stripe.billingPortal.sessions.create({
