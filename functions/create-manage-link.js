@@ -23,7 +23,7 @@ exports.handler = async (event, context) => {
 
   //   console.log({result});
 
-  const stripeID = result.data.get.getUserByNetlifyID.stripeID;
+  const stripeID = result.data.getUserByNetlifyID.stripeID;
 
   console.log({stripeID});
 
