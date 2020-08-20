@@ -4,27 +4,19 @@ const atob = require('atob');
 
 exports.handler = async (event, context) => {
   const { user } = context.clientContext;
-  const {token} = context.clientContext.identity;
-  const parts = token.split('.');
-  const currentUser = JSON.parse(atob(parts[1]));
-
-  console.log({event});
-  console.log('what is the client context currentUser?', currentUser);
-  console.log('what is the client context ', context);
-
-  console.log('what is the user in create manage link', user);
-
+  
+  console.log(user);
+  
   const query = `
-        query($netlifyID: ID!) {
-            getUserByNetlifyID(netlifyID: $netlifyID){
-            stripeID
-            netlifyID
-            }
+      query ($netlifyID: ID!) {
+        getUserByNetlifyID(netlifyID: $netlifyID){
+          stripeID
+          netlifyID
         }
+      }
     `;
-
-  const variables = { netlifyID: currentUser};
-
+  const variables = { netlifyID: user.sub };
+    
   const result = await faunaFetch({query, variables});
 
   return {

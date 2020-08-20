@@ -11,23 +11,26 @@ export const Index = () => {
   const loggedInEffect = () => {
     if (identity && identity.user) {
       const { roles } =  identity.user.app_metadata;
+      const { id } =  identity.user;
       const currentUser = identity.user;
-      const access_token = identity.user.token.access_token;
-      const parts = access_token.split('.');
+      const { token } = identity.user;
+      // const parts = access_token.split('.');
       // const currentUser = JSON.parse(atob(parts[1]));
-      const {sub} = currentUser;
+      // const {sub} = currentUser;
       console.log({roles});
+      console.log({id});
+      console.log({token});
       console.log('What is the token?', identity.user.token.access_token);
       console.log('What is the currentUser?', currentUser);
-      console.log('What is the sub?', sub);
+      // console.log('What is the sub?', sub);
       setIsSubscribed(roles);
       fetch('/.netlify/functions/create-manage-link', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${currentUser}`
+          Authorization: `Bearer ${token.access_token}`
         }
       })
-        .then((res) => res.text())
+        .then((res) => res.json())
         .then((res) => console.log(res))
         .catch((err) => console.error(err));
     } 
