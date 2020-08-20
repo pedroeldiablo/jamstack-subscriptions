@@ -35,18 +35,11 @@ export const Index = () => {
       fetch('/.netlify/functions/create-manage-link', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token.access_token}`
+          Authorization: `Bearer ${accessHeader}`
         }
       })
-        // .then((res) => res.json())
-        // .then((res) => console.log(res.body))
-        .then((res) => { 
-          console.log('what is the res?', res);
-          const body = res.body; 
-          console.log('where is the body? ', body);
-          const reader = body.getReader();
-          console.log(reader);
-        })
+        .then((response) => response.text())
+        .then((res) => console.log('Index function return ', res))
         .catch((err) => console.error(err));
     } 
   };

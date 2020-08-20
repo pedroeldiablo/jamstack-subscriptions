@@ -19,18 +19,27 @@ exports.handler = async (event, context) => {
 
   console.log({variables});
     
-  const result = await faunaFetch({query, variables});
+  //   const result = await faunaFetch({query, variables});
 
-  console.log({result});
+  const result = {
+    'data': {
+      'getUserByNetlifyID': {
+        'stripeID': 'cus_HrxGz8ueOUVY3a',
+        'netlifyID': '704168b7-166a-4c6e-b848-2de9fedfa295'
+      }
+    }
+  };
 
-  const stripeID = result.data.getUserByNetlifyID.stripeID;
-  const link = await stripe.billingPortal.sessions.create({
-    customer: stripeID,
-    return_url: process.env.URL
-  });
+  //   console.log({result});
+
+  //   const stripeID = result.data.getUserByNetlifyID.stripeID;
+  //   const link = await stripe.billingPortal.sessions.create({
+  //     customer: stripeID,
+  //     return_url: process.env.URL
+  //   });
 
   return {
     statusCode: 200,
-    body: JSON.stringify(link.url)
+    body: JSON.stringify(result)
   };
 };
