@@ -35,7 +35,7 @@ export const Index = () => {
       fetch('/.netlify/functions/create-manage-link', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${accessHeader}`
+          Authorization: `Bearer ${token.access_token}`
         }
       })
         .then((response) => response.text())
