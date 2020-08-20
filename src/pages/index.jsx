@@ -14,12 +14,20 @@ export const Index = () => {
       const { id } =  identity.user;
       const currentUser = identity.user;
       const { token } = identity.user;
-      // const parts = access_token.split('.');
-      // const currentUser = JSON.parse(atob(parts[1]));
       // const {sub} = currentUser;
       console.log({roles});
       console.log({id});
       console.log({token});
+      const accessToken = token.access_token;
+      console.log({accessToken});
+
+      const parts = accessToken.split('.');
+      const headerToken = JSON.parse(atob(parts[1]));
+      const accessHeader = parts[0];
+      console.log({accessHeader});
+      console.log({parts});
+      console.log({headerToken});
+
       console.log('What is the token?', identity.user.token.access_token);
       console.log('What is the currentUser?', currentUser);
       // console.log('What is the sub?', sub);
@@ -27,10 +35,10 @@ export const Index = () => {
       fetch('/.netlify/functions/create-manage-link', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token.access_token}`
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
         }
       })
-        // .then((res) => res.json())
+        .then((res) => res.json())
         .then((res) => console.log(res))
         .catch((err) => console.error(err));
     } 

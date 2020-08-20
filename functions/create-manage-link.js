@@ -24,11 +24,13 @@ exports.handler = async (event, context) => {
   console.log({result});
 
   const stripeID = result.data.getUserByNetlifyID.stripeID;
-
-  console.log({stripeID});
+  const link = await stripe.billingPortal.sessions.create({
+    customer: stripeID,
+    return_url: process.env.URL
+  });
 
   return {
     statusCode: 200,
-    body: JSON.stringify(result)
+    body: JSON.stringify(link.url)
   };
 };
