@@ -16,6 +16,6 @@ exports.faunaFetch = async({ query, variables}) => {
     })
   })
     .then(res => console.log('faunaFetch res ', res))
-    .then(res => res.json())
+    .then(res => res.body.json())
     .catch(err => console.error('Fauna error ', err, null, 2));
 };
