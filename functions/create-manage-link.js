@@ -19,7 +19,7 @@ exports.handler = async (event, context) => {
     
   const result = await faunaFetch({query, variables});
 
-  console.log(result);
+  console.log({result});
 
   return {
     statusCode: 200,

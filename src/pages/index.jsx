@@ -30,7 +30,7 @@ export const Index = () => {
           Authorization: `Bearer ${token.access_token}`
         }
       })
-        .then((res) => res.json())
+        // .then((res) => res.json())
         .then((res) => console.log(res))
         .catch((err) => console.error(err));
     } 
