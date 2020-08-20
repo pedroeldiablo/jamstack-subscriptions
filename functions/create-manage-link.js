@@ -16,6 +16,8 @@ exports.handler = async (event, context) => {
       }
     `;
   const variables = { netlifyID: user.sub };
+
+  console.log({variables});
     
   const result = await faunaFetch({query, variables});
 
