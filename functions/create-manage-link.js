@@ -10,6 +10,7 @@ exports.handler = async (event, context) => {
 
   console.log({event});
   console.log('what is the client context currentUser?', currentUser);
+  console.log('what is the client context ', context);
 
   console.log('what is the user in create manage link', user);
 
