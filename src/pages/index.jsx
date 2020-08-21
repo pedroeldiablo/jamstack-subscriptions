@@ -24,12 +24,12 @@ export const Index = () => {
       const parts = accessToken.split('.');
       const headerToken = JSON.parse(atob(parts[1]));
       const accessHeader = parts[0];
-      console.log({accessHeader});
-      console.log({parts});
-      console.log({headerToken});
+      // console.log({accessHeader});
+      // console.log({parts});
+      // console.log({headerToken});
 
-      console.log('What is the token?', identity.user.token.access_token);
-      console.log('What is the currentUser?', currentUser);
+      // console.log('What is the token?', identity.user.token.access_token);
+      // console.log('What is the currentUser?', currentUser);
       // console.log('What is the sub?', sub);
       setIsSubscribed(roles);
       fetch('/.netlify/functions/create-manage-link', {
