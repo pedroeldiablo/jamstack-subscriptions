@@ -16,16 +16,20 @@ exports.handler = async (event, context) => {
   `;
   const variables = { netlifyID: user.sub };
 
+  const bodyRequest = JSON.stringify({query, variables});
+
+  console.log('What is the body request? ', bodyRequest);
+
   const result = await faunaFetch({ query, variables });
 
-  //   const stripeID = result.data.getUserByNetlifyID.stripeID;
-  //   const link = await stripe.billingPortal.sessions.create({
-  //     customer: stripeID,
-  //     return_url: process.env.URL
-  //   });
+  const stripeID = result.data.getUserByNetlifyID.stripeID;
+  const link = await stripe.billingPortal.sessions.create({
+    customer: stripeID,
+    return_url: process.env.URL
+  });
 
   return {
     statusCode: 200,
-    body: JSON.stringify(result)
+    body: JSON.stringify(link)
   };
 };
