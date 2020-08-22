@@ -4,7 +4,7 @@ const { faunaFetch } = require('./utils/fauna');
 exports.handler = async (event, context) => {
   const { user } = context.clientContext;
 
-  console.log(user);
+  //   console.log(user);
 
   const query = `
     query ($netlifyID: ID!) {
@@ -16,9 +16,9 @@ exports.handler = async (event, context) => {
   `;
   const variables = { netlifyID: user.sub };
 
-  const bodyRequest = JSON.stringify({query, variables});
+  //   const bodyRequest = JSON.stringify({query, variables});
 
-  console.log('What is the body request? ', bodyRequest);
+  //   console.log('What is the body request? ', bodyRequest);
 
   const result = await faunaFetch({ query, variables });
 
