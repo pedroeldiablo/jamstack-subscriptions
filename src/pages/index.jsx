@@ -5,20 +5,28 @@ import '@reach/tabs/styles.css';
 
 export const Index = () => {
   const identity = useIdentityContext();
+  // const refreshToken =  identity.getFreshJWT(true).then((JWT) => console.log('Refresh token', JWT));
+  // console.log({identity});
   const [dialog, setDialog] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState('not subscribed');
-
-  const loggedInEffect = () => {
-    if (identity && identity.user) {
-      const { roles } =  identity.user.app_metadata;
-      setIsSubscribed(roles);
-    } 
-  };
-         
+  // const [isRole, setIsRole] = useState('no role defined');
+      
   useEffect(() => {
+    const loggedInEffect = () => {
+      if (identity && identity.user) {
+        // const token =  identity.getFreshJWT(true).then((JWT) => console.log('New JWT', JWT));
+        // const token = identity.user.token.access_token;
+        // const parts = token.split('.');
+        // const currentUser = JSON.parse(atob(parts[1]));
+        // const { roles } = currentUser.app_metadata;
+  
+        const { roles } =  identity.user.app_metadata;
+        setIsSubscribed(roles);
+      } 
+    };
     console.log('used loggedInEffect');
     loggedInEffect();
-  });
+  },[isSubscribed, identity]);
 
   function manageSubscription() {
     if (identity && identity.user) {
@@ -50,7 +58,7 @@ export const Index = () => {
         <>
           <h2>Manage your subscription</h2>
           <button id="manage-subscription" onClick={manageSubscription}>Manage Your Subscriptions</button>
-          <pre>{JSON.stringify(identity, null, 2)}</pre>  
+          {/* <pre>{JSON.stringify(identity, null, 2)}</pre>   */}
         </>
       )}
       {!dialog && (<button onClick={() => setDialog(true)}>Log On</button>)}
