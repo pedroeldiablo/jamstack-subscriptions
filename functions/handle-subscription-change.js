@@ -25,6 +25,8 @@ exports.handler = async ({ body, headers }, context) => {
       const stripeID = subscription.customer;
       const plan = subscription.plan.product;
 
+      console.log('what is the plan? ', subscription.plan);
+
       const role = `sub:${plan.split(' ')[0].toLowerCase()}`;
 
       const query = `
