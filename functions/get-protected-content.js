@@ -1,9 +1,12 @@
 const { contentfulFetch } = require('./utils/contentful');
   
 exports.handler = async (event, context) => {
+  console.log({event});
   const { type } = JSON.parse(event.body);
   const { user } = context.clientContext;
-  const roles = user ? user.app_metadata.roles : false;
+  //   const roles = user ? user.app_metadata.roles : false;
+  const roles = ['free'];
+  console.log({roles});
   
   // Load content from Contentful
   const response = await contentfulFetch({
@@ -24,15 +27,17 @@ exports.handler = async (event, context) => {
               credit
               creditLink
               allowedRoles
-              message
             }
           }
         }
       `,
     variables: {}
   });
+
+  console.log('Get content', response);
   
   const content = response.data.productCollection.items;
+  console.log('Get content content', content);
   const requestedContent = content.find((c) => c.title === type);
   const { allowedRoles } = requestedContent;
   
@@ -41,13 +46,13 @@ exports.handler = async (event, context) => {
       statusCode: 402,
       body: JSON.stringify({
         image: {
-          url: 'https://unsplash.com/photos/dGk-qYBk4OA',
+          url: 'https://images.unsplash.com/photo-1523672557977-2c106afb2278?w=600&h=600&q=80&fit=fill',
           description:
               'No entry sign - Sorry you can\'t get in without a subscription to this content'
         },
         credit: 'Kyle Glenn',
         creditLink: 'https://unsplash.com/@kylejglenn',
-        message: `This content requires a ${type} subscription.`
+        title: `This content requires a ${type} subscription.`
       })
     };
   }
