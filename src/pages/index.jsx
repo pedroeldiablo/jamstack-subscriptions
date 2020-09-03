@@ -11,7 +11,33 @@ export const Index = () => {
   console.log({netlifyIdentity});
   const [isRole, setIsRole] = useState('no role defined');
 
+  
+
   useEffect(() => {
+    const loadSubscriptionContent = async (user) => {
+      const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
+  
+      ['free', 'pro', 'premium'].forEach((type) => {
+        fetch('/.netlify/functions/get-protected-content', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ type })
+        })
+          // .then((res) => res.json())
+          .then((data) => {
+            console.log('What is the data?', data);
+  
+            // img.src = data.image.url;
+            // img.alt = data.image.description;
+            // credit.href = data.creditLink;
+            // credit.innerText = `Credit: ${data.credit}`;
+            // caption.innerText = data.message;
+          });
+      });
+    };
+
     function refreshToken () {
       if (user) {
         console.log('Current user', user);
@@ -25,6 +51,7 @@ export const Index = () => {
       }
     }
     refreshToken();
+    loadSubscriptionContent(user);
   },[user, netlifyIdentity]);
 
   function manageSubscription() {
@@ -43,6 +70,14 @@ export const Index = () => {
         .catch((err) => console.error(err));
     } 
   }
+
+
+  
+
+  // const handleUserStateChange = (user) => {
+  //   updateUserInfo(user);
+  //   loadSubscriptionContent(user);
+  // };
 
   return (
     <>
