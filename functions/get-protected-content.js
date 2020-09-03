@@ -1,9 +1,12 @@
 const { contentfulFetch } = require('./utils/contentful');
   
 exports.handler = async (event, context) => {
+  console.log({event});
   const { type } = JSON.parse(event.body);
   const { user } = context.clientContext;
-  const roles = user ? user.app_metadata.roles : false;
+  //   const roles = user ? user.app_metadata.roles : false;
+  const roles = ['premium'];
+  console.log({roles});
   
   // Load content from Contentful
   const response = await contentfulFetch({
@@ -24,15 +27,17 @@ exports.handler = async (event, context) => {
               credit
               creditLink
               allowedRoles
-              message
             }
           }
         }
       `,
     variables: {}
   });
+
+  console.log('Get content', response);
   
   const content = response.data.productCollection.items;
+  console.log('Get content content', content);
   const requestedContent = content.find((c) => c.title === type);
   const { allowedRoles } = requestedContent;
   

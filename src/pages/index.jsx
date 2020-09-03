@@ -25,7 +25,7 @@ export const Index = () => {
           },
           body: JSON.stringify({ type })
         })
-          // .then((res) => res.json())
+          .then((res) => res.json())
           .then((data) => {
             console.log('What is the data?', data);
   
