@@ -1,19 +1,17 @@
 import React,  {useContext, useState, useEffect} from 'react';
 import { IdentityContext } from '../../identity-context';
-// import { IdentityModal, useIdentityContext, useNetlifyIdentity } from 'react-netlify-identity-widget';
-// import netlifyIdentity from 'netlify-identity-widget';
-// import 'react-netlify-identity-widget/styles.css';
-// import '@reach/tabs/styles.css';
 
 export const Index = () => {
   const { user, identity: netlifyIdentity } = useContext(IdentityContext);
   console.log({user});
   console.log({netlifyIdentity});
   const [isRole, setIsRole] = useState('no role defined');
+  const [subscriptionContent, setSubscriptionContent] = useState([]);
 
   
 
   useEffect(() => {
+    const loadedChannels = [];
     const loadSubscriptionContent = async (user) => {
       const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
   
@@ -27,13 +25,11 @@ export const Index = () => {
         })
           .then((res) => res.json())
           .then((data) => {
+            loadedChannels.push(data);
+            
             console.log('What is the data?', data);
-  
-            // img.src = data.image.url;
-            // img.alt = data.image.description;
-            // credit.href = data.creditLink;
-            // credit.innerText = `Credit: ${data.credit}`;
-            // caption.innerText = data.message;
+            console.log({subscriptionContent});
+            setSubscriptionContent([...loadedChannels]);
           });
       });
     };
@@ -71,14 +67,6 @@ export const Index = () => {
     } 
   }
 
-
-  
-
-  // const handleUserStateChange = (user) => {
-  //   updateUserInfo(user);
-  //   loadSubscriptionContent(user);
-  // };
-
   return (
     <>
       {user ?  <>
@@ -89,6 +77,19 @@ export const Index = () => {
         <button onClick={() => {
           netlifyIdentity.open();
         }}>Log Out</button>
+        <div className="subscription-content">
+          <div className="content">
+            {
+              
+            }
+            <p>{subscriptionContent.allowedRoles}</p>
+            {/* title, image, credit, creditLink, allowedRoles */}
+            {subscriptionContent.map(subscription =>
+              <><div>{subscription.title}</div>
+                <img src={subscription.image.url} alt={subscription.credit}></img></>
+            )}
+          </div>
+        </div>
       </>
         :
         <>
