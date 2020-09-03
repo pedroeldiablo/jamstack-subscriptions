@@ -4,8 +4,8 @@ exports.handler = async (event, context) => {
   console.log({event});
   const { type } = JSON.parse(event.body);
   const { user } = context.clientContext;
-  //   const roles = user ? user.app_metadata.roles : false;
-  const roles = ['free'];
+  const roles = user ? user.app_metadata.roles : false;
+  // const roles = ['free'];
   console.log({roles});
   
   // Load content from Contentful

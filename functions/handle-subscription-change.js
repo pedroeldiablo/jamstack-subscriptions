@@ -27,7 +27,7 @@ exports.handler = async ({ body, headers }, context) => {
 
       console.log('what is the plan? ', subscription.plan.nickname);
 
-      const role = `sub:${plan.split(' ')[0].toLowerCase()}`;
+      const role = `${plan.split(' ')[0].toLowerCase()}`;
 
       const query = `
           query ($stripeID: ID!) {

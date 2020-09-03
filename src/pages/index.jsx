@@ -15,7 +15,7 @@ export const Index = () => {
     const loadSubscriptionContent = async (user) => {
       const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
   
-      ['free', 'pro', 'premium'].forEach((type) => {
+      ['free', 'pro', 'premium', 'super'].forEach((type) => {
         fetch('/.netlify/functions/get-protected-content', {
           method: 'POST',
           headers: {
