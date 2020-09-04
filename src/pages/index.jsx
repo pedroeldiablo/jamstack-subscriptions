@@ -5,7 +5,7 @@ export const Index = () => {
   const { user, identity: netlifyIdentity } = useContext(IdentityContext);
   console.log({user});
   console.log({netlifyIdentity});
-  const [isRole, setIsRole] = useState('no role defined');
+  const [isRole, setIsRole] = useState('You need to sign-in');
   const [subscriptionContent, setSubscriptionContent] = useState([]);
 
   
