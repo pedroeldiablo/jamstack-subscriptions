@@ -3,19 +3,51 @@ import { IdentityContext } from '../../identity-context';
 
 export const Index = () => {
   const { user, identity: netlifyIdentity } = useContext(IdentityContext);
-  console.log({user});
-  console.log({netlifyIdentity});
+  // console.log({user});
+  // console.log({netlifyIdentity});
   const [isRole, setIsRole] = useState('You need to sign-in');
   const [subscriptionContent, setSubscriptionContent] = useState([]);
+  const [loadedContent, setLoadedContent] = useState([]);
 
-  
+
+ 
 
   useEffect(() => {
     const loadedChannels = [];
+    const contentLoad =[];
+    const subscriptionTiers = ['free', 'pro', 'premium', 'super'];
+    
+    async function logInOrder(user, subscriptionTiers) {
+      const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
+      // fetch all the URLs in parallel
+      const textPromises = subscriptionTiers.map(async subscriptionTier => {
+        console.log(subscriptionTier);
+        const response = await fetch('/.netlify/functions/get-protected-content', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ type: subscriptionTier})
+        });
+        console.log(response);
+        return response.json();
+
+      });
+    
+      // log them in sequence
+      for (const textPromise of textPromises) {
+        console.log('logInOrder', await textPromise);
+        contentLoad.push(await textPromise);
+
+      }
+      setLoadedContent([...contentLoad]);
+    }
+
     const loadSubscriptionContent = async (user) => {
       const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
   
       ['free', 'pro', 'premium', 'super'].forEach((type) => {
+        console.log({type});
         fetch('/.netlify/functions/get-protected-content', {
           method: 'POST',
           headers: {
@@ -27,8 +59,8 @@ export const Index = () => {
           .then((data) => {
             loadedChannels.push(data);
             
-            console.log('What is the data?', data);
-            console.log({subscriptionContent});
+            // console.log('What is the data?', data);
+            // console.log({subscriptionContent});
             setSubscriptionContent([...loadedChannels]);
           });
       });
@@ -41,13 +73,14 @@ export const Index = () => {
           const parts = token.split('.');
           const currentUser = JSON.parse(atob(parts[1]));
           const { roles } = currentUser.app_metadata;
-          console.log(roles);
+          // console.log(roles);
           setIsRole(roles);
         });
       }
     }
     refreshToken();
     loadSubscriptionContent(user);
+    logInOrder(user, subscriptionTiers);
   },[user, netlifyIdentity]);
 
   function manageSubscription() {
@@ -82,9 +115,13 @@ export const Index = () => {
             {
               
             }
-            <p>{subscriptionContent.allowedRoles}</p>
+            {/* <p>{subscriptionContent.allowedRoles}</p> */}
             {/* title, image, credit, creditLink, allowedRoles */}
-            {subscriptionContent.map(subscription =>
+            {/* {subscriptionContent.map(subscription =>
+              <><div>{subscription.title}</div>
+                <img src={subscription.image.url} alt={subscription.credit}></img></>
+            )} */}
+            {loadedContent.map(subscription =>
               <><div>{subscription.title}</div>
                 <img src={subscription.image.url} alt={subscription.credit}></img></>
             )}
