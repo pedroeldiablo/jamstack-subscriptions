@@ -1,12 +1,13 @@
 const { contentfulFetch } = require('./utils/contentful');
   
 exports.handler = async (event, context) => {
-  console.log({event});
+  console.log('What is the event body', event.body);
+
   const { type } = JSON.parse(event.body);
   const { user } = context.clientContext;
   const roles = user ? user.app_metadata.roles : false;
   // const roles = ['free'];
-  console.log({roles});
+  // console.log({roles});
   
   // Load content from Contentful
   const response = await contentfulFetch({
@@ -37,8 +38,10 @@ exports.handler = async (event, context) => {
   console.log('Get content', response);
   
   const content = response.data.productCollection.items;
+  console.log('what type', type);
   console.log('Get content content', content);
   const requestedContent = content.find((c) => c.title === type);
+  console.log('what is the requestedContent', requestedContent);
   const { allowedRoles } = requestedContent;
   
   if (!roles || !roles.some((role) => allowedRoles.includes(role))) {
